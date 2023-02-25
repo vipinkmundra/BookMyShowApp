@@ -2,6 +2,8 @@ package com.example.BookMyShow.Entities;
 
 import com.example.BookMyShow.Enums.Genre;
 import com.example.BookMyShow.Enums.Language;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Table(name = "movies")
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
