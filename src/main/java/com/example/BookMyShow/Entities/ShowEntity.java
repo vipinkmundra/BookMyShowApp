@@ -2,6 +2,8 @@ package com.example.BookMyShow.Entities;
 
 import com.example.BookMyShow.Enums.ShowType;
 import jdk.jfr.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,6 +20,8 @@ import java.util.List;
 @Entity
 @Table(name = "shows")
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class ShowEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +52,6 @@ public class ShowEntity {
 
     //this is parent wrt to showSeatEntity
     @OneToMany(mappedBy = "showEntity",cascade = CascadeType.ALL)
-    List<TicketEntity> listOfShowSeats = new ArrayList<>();
+    List<ShowSeatEntity> listOfShowSeats = new ArrayList<>();
 
 }
