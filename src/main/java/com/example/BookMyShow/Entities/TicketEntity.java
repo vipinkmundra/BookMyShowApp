@@ -2,6 +2,7 @@ package com.example.BookMyShow.Entities;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Table(name = "tickets")
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class TicketEntity {
     @Id
@@ -25,6 +27,7 @@ public class TicketEntity {
     private LocalTime showTime;
     private String ticketId = UUID.randomUUID().toString();
     private String theaterName;
+    private String bookedSeats;
 
     //This is child wrt to userEntity
     @ManyToOne
