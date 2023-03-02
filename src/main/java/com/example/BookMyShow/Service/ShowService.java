@@ -5,6 +5,7 @@ import com.example.BookMyShow.Dto.ShowEntryDto;
 import com.example.BookMyShow.Entities.*;
 import com.example.BookMyShow.Enums.SeatType;
 import com.example.BookMyShow.Repository.MovieRepository;
+import com.example.BookMyShow.Repository.ShowRepository;
 import com.example.BookMyShow.Repository.TheaterRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ShowService {
 
     @Autowired
     MovieRepository movieRepository;
+
+    @Autowired
+    ShowRepository showRepository;
 
     public String addShow(ShowEntryDto showEntryDto){
         ShowEntity showEntity = ShowConvertor.convertDtoToShowEntity(showEntryDto);
@@ -39,16 +43,15 @@ public class ShowService {
         showEntity.setListOfShowSeats(showSeatEntityList);
 
         //Now we  also need to update the parent entities
-        List<ShowEntity> showEntityList = movieEntity.getShowList();
-        showEntityList.add(showEntity);
-        movieEntity.setShowList(showEntityList);
+        //save method return the saved entity too.
+        //we saved in showRepository(child entity) first so that the show entity will not added twice due to cascading effect
+        //by saving the entity the primary key will set based on that next time only update will happen by cascading effect
+        showEntity = showRepository.save(showEntity);
+
+        movieEntity.getShowList().add(showEntity);
+        theaterEntity.getShowEntityList().add(showEntity);
 
         movieRepository.save(movieEntity);
-
-        List<ShowEntity> showEntityList1 = theaterEntity.getShowEntityList();
-        showEntityList1.add(showEntity);
-        theaterEntity.setShowEntityList(showEntityList1);
-
         theaterRepository.save(theaterEntity);
 
         return "The show is added successfully.";

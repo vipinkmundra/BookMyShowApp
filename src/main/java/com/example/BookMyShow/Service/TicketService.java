@@ -66,17 +66,14 @@ public class TicketService {
         ticketEntity.setShowEntity(showEntity);
 
         //Save the parent
-//        ticketEntity = ticketRepository.save(ticketEntity); need to check
+        //same as show entity to avoid the adding the same entity again in repository
+        ticketEntity = ticketRepository.save(ticketEntity);
 
-        List<TicketEntity> ticketEntityList = showEntity.getListOfBookedTicketsForShow();
-        ticketEntityList.add(ticketEntity);
-        showEntity.setListOfBookedTicketsForShow(ticketEntityList);
-        showRepository.save(showEntity);
+        showEntity.getListOfBookedTicketsForShow().add(ticketEntity);
+        userEntity.getBookedTickets().add(ticketEntity);
 
-        List<TicketEntity> ticketEntityList1 = userEntity.getBookedTickets();
-        ticketEntityList1.add(ticketEntity);
-        userEntity.setBookedTickets(ticketEntityList1);
         userRepository.save(userEntity);
+        showRepository.save(showEntity);
 
         return "Ticket has successfully been added";
     }
