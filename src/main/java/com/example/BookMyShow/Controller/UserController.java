@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
-    @PostMapping("/add")
+    @PostMapping("/add_user")
     public ResponseEntity<String> addUser(@RequestBody UserEntryDto userEntryDto){
         try {
             String response = userService.addUser(userEntryDto);
